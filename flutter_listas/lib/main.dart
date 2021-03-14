@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_listas/src/pages/HomePageTemp.dart';
-import 'package:flutter_listas/src/pages/home_page.dart';
+//import 'package:flutter_listas/src/pages/home_page.dart';
+import 'package:flutter_listas/src/routes/routes.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
       title: 'Componentes App',
       debugShowCheckedModeBanner: false,
       //home: HomePageTemp(),
-      home: HomePage(),
+      //home: HomePage(),
+      initialRoute: '/',
+      routes: getApplicationRoutes(),
     );
   }
 }
