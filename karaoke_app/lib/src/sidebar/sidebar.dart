@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:karaoke_app/src/pages/myaccountpage.dart';
 /* 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karaoke_app/bloc.navigation_bloc/navigation_bloc.dart'; */
@@ -53,7 +54,7 @@ class _SideBarState extends State<SideBar>
           top: 0,
           bottom: 0,
           left: isSidebarOpnendAsync.data ? 0 : -screenWidth,
-          right: isSidebarOpnendAsync.data ? 0 : screenWidth - 45,
+          right: isSidebarOpnendAsync.data ? 0 : screenWidth - 35,
           child: Row(
             children: [
               Expanded(
@@ -93,6 +94,7 @@ class _SideBarState extends State<SideBar>
                     MenuItem(
                       icon: Icons.home,
                       title: "Home",
+                      onTap: () => {Navigator.pushNamed(context, 'homePage')},
                       /* onTap: () {
                         onIconPressed();
                         BlocProvider.of<NavigationBloc>(context)
@@ -100,17 +102,23 @@ class _SideBarState extends State<SideBar>
                       }, */
                     ),
                     MenuItem(
-                      icon: Icons.person,
-                      title: "My Account",
-                      /* onTap: () {
+                        icon: Icons.person,
+                        title: "My Account",
+                        onTap: () {
+                          final route =
+                              MaterialPageRoute(builder: builderRoutBasic);
+                          Navigator.push(context, route);
+                        }
+                        /* onTap: () {
                         onIconPressed();
                         BlocProvider.of<NavigationBloc>(context)
                             .add(NavigatioEvents.AccountClickedEvent);
                       }, */
-                    ),
+                        ),
                     MenuItem(
                       icon: Icons.shopping_basket,
                       title: "Orders",
+                      onTap: () => {Navigator.pushNamed(context, 'orders')},
                       /* onTap: () {
                         onIconPressed();
                         BlocProvider.of<NavigationBloc>(context)
@@ -170,6 +178,7 @@ class _SideBarState extends State<SideBar>
   }
 
   void onIconPressed() {
+    print('onIconPressed');
     final animationStatus = _animationController.status;
     final isAnimatedCompleted = animationStatus == AnimationStatus.completed;
     if (isAnimatedCompleted) {
@@ -179,6 +188,10 @@ class _SideBarState extends State<SideBar>
       isSidebaropenedSink.add(true);
       _animationController.forward();
     }
+  }
+
+  Widget builderRoutBasic(BuildContext context) {
+    return AccountPage();
   }
 }
 

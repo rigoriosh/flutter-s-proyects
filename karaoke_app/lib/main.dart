@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:karaoke_app/src/sidebar/sidebar_layout.dart';
+import 'package:karaoke_app/src/pages/homepage.dart';
+import 'package:karaoke_app/src/routes/routs.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +12,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white, primaryColor: Colors.white),
-      home: SideBarLayaout(),
+      /* theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white, primaryColor: Colors.white), */
+      initialRoute: '/',
+      routes: getRutas(),
+      onGenerateRoute: (settings) {
+        //print('Ruta ${settings.arguments}');
+        return MaterialPageRoute(builder: builderRout);
+      },
     );
+  }
+
+  Widget builderRout(BuildContext context) {
+    return HomePage();
   }
 }
