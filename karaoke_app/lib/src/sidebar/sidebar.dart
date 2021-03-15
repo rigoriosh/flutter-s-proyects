@@ -1,6 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+/* 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karaoke_app/bloc.navigation_bloc/navigation_bloc.dart'; */
+import 'package:karaoke_app/src/sidebar/menu_item.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SideBar extends StatefulWidget {
@@ -54,6 +58,7 @@ class _SideBarState extends State<SideBar>
             children: [
               Expanded(
                   child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 color: Color(colorFondo),
                 child: Column(
                   children: [
@@ -85,6 +90,52 @@ class _SideBarState extends State<SideBar>
                       indent: 30,
                       endIndent: 30,
                     ),
+                    MenuItem(
+                      icon: Icons.home,
+                      title: "Home",
+                      /* onTap: () {
+                        onIconPressed();
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigatioEvents.HomePageClickedEvent);
+                      }, */
+                    ),
+                    MenuItem(
+                      icon: Icons.person,
+                      title: "My Account",
+                      /* onTap: () {
+                        onIconPressed();
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigatioEvents.AccountClickedEvent);
+                      }, */
+                    ),
+                    MenuItem(
+                      icon: Icons.shopping_basket,
+                      title: "Orders",
+                      /* onTap: () {
+                        onIconPressed();
+                        BlocProvider.of<NavigationBloc>(context)
+                            .add(NavigatioEvents.OrdersClickedEvent);
+                      }, */
+                    ),
+                    MenuItem(
+                      icon: Icons.card_giftcard,
+                      title: "Wishlist",
+                    ),
+                    Divider(
+                      height: 64,
+                      thickness: 0.5,
+                      color: Color(firstColor),
+                      indent: 30,
+                      endIndent: 30,
+                    ),
+                    MenuItem(
+                      icon: Icons.settings,
+                      title: "Settings",
+                    ),
+                    MenuItem(
+                      icon: Icons.exit_to_app,
+                      title: "Logout",
+                    ),
                   ],
                 ),
               )),
@@ -94,16 +145,19 @@ class _SideBarState extends State<SideBar>
                   onTap: () {
                     onIconPressed();
                   },
-                  child: Container(
-                    width: 35,
-                    height: 110,
-                    color: Color(colorFondo),
-                    alignment: Alignment.centerLeft,
-                    child: AnimatedIcon(
-                      progress: _animationController.view,
-                      icon: AnimatedIcons.menu_close,
-                      color: Color(firstColor),
-                      size: 25,
+                  child: ClipPath(
+                    clipper: CustomMenuClipper(),
+                    child: Container(
+                      width: 35,
+                      height: 110,
+                      color: Color(colorFondo),
+                      alignment: Alignment.centerLeft,
+                      child: AnimatedIcon(
+                        progress: _animationController.view,
+                        icon: AnimatedIcons.menu_close,
+                        color: Color(firstColor),
+                        size: 25,
+                      ),
                     ),
                   ),
                 ),
@@ -125,6 +179,32 @@ class _SideBarState extends State<SideBar>
       isSidebaropenedSink.add(true);
       _animationController.forward();
     }
+  }
+}
+
+class CustomMenuClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Paint paint = Paint();
+    paint.color = Colors.white;
+
+    final width = size.width;
+    final height = size.height;
+
+    Path path = Path();
+    path.moveTo(0, 0);
+    path.quadraticBezierTo(0, 8, 10, 16);
+    path.quadraticBezierTo(width - 1, height / 2 - 20, width, height / 2);
+    path.quadraticBezierTo(width + 1, height / 2 + 20, 10, height - 16);
+    path.quadraticBezierTo(0, height - 8, 0, height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
 
